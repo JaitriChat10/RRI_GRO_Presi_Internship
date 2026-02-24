@@ -50,6 +50,23 @@ def Horizontal_Equatorial(a, A, lat, lst_deg):
     ra = ra % (2*np.pi)
 
     return np.degrees(ra), np.degrees(dec)
+
+#Function for conversion from Equatorial to Galactic Coordinate System
+def Equatorial_Galactic(ra_deg, dec_deg):
+    ra = np.radians(ra_deg)
+    dec = np.radians(dec_deg)
+
+    # Galactic North Pole (J2000)
+    ra_gp = np.radians(192.85948)
+    dec_gp = np.radians(27.12825)
+    l_N = np.radians(123.0)
+
+    sin_b = (np.sin(dec)*np.sin(dec_gp)) + (np.cos(dec)*np.cos(dec_gp)*np.cos(ra - ra_gp))
+    b = np.arcsin(sin_b)
+
+    sin_ln_l = (np.cos(dec)*np.sin(ra - ra_gp))/np.cos(b)
+    l = l_N - np.arcsin(sin_ln_l)
+    return np.degrees(l), np.degrees(b)
     
     
 #Interactive cell for entering required details
